@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+        .section {
+            margin: 20px;
+        }
+        .section h2 {
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .app-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .app-card img {
+            max-width: 100px;
+            margin-bottom: 10px;
+        }
+        .app-card a {
+            margin-top: auto;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+            width: 100%;
+        }
+        .app-card a:hover {
+            background-color: #45a049;
+        }
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }
+        .upload-form input, .upload-form textarea, .upload-form button {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>iUP Store 🛍️</h1>
+    </div>
+
+    <div class="section" id="for-you">
+        <h2>For You</h2>
+        <div class="app-grid">
+            <!-- New apps will be displayed here -->
+        </div>
+    </div>
+
+    <div class="section" id="categories">
+        <h2>Categories</h2>
+        <ul>
+            <li>Jewelry</li>
+            <li>Clothes</li>
+            <li>Shoes</li>
+            <li>All Products</li>
+            <!-- More categories can be added here -->
+        </ul>
+        <div>
+            
+
+    <div class="section" id="upload-app">
+        <h2>Product</h2>
+        <form class="upload-form" onsubmit="addApp(event)">
+            <label for="app-title">App Title:</label>
+            <input type="text" id="app-title" name="app-title" required>
+
+            <label for="app-logo">Logo:</label>
+            <input type="file" id="app-logo" name="app-logo" accept="image/*" required>
+
+            <label for="app-url">URL:</label>
+            <input type="url" id="app-url" name="app-url" required>
+
+            <label for="app-description">Short Description:</label>
+            <textarea id="app-description" name="app-description" rows="4" required></textarea>
+
+            <button type="submit">Publish</button>
+        </form>
+    </div>
+
+    <script>
+        function addApp(event) {
+            event.preventDefault();
+
+            // Get form data
+            const appTitle = document.getElementById('app-title').value;
+            const appLogo = document.getElementById('app-logo').files[0];
+            const appUrl = document.getElementById('app-url').value;
+            const appDescription = document.getElementById('app-description').value;
+
+            // Create new app card
+            const appCard = document.createElement('div');
+            appCard.className = 'app-card';
+
+            const logoImg = document.createElement('img');
+            logoImg.src = URL.createObjectURL(appLogo);
+            logoImg.alt = 'App Logo';
+
+            const titleElement = document.createElement('h3');
+            titleElement.textContent = appTitle;
+
+            const descriptionElement = document.createElement('p');
+            descriptionElement.textContent = appDescription;
+
+            const installLink = document.createElement('a');
+            installLink.href = appUrl;
+            installLink.target = '_blank';
+            installLink.textContent = 'Buy';
+
+            appCard.appendChild(logoImg);
+            appCard.appendChild(titleElement);
+            appCard.appendChild(descriptionElement);
+            appCard.appendChild(installLink);
+
+            // Add new app card to "For You" section
+            document.querySelector('#for-you .app-grid').appendChild(appCard);
+
+            // Clear the form
+            event.target.reset();
+        }
+    </script>
+
+</body>
+</html>
